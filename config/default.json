@@ -1,0 +1,32 @@
+{
+    "server": {
+        "port": 3500
+    },
+    "seqDbConfig": {
+        "username": "root",
+        "password": "password",
+        "host": "localhost",
+        "port": 3306,
+        "dialect": "mysql",
+        "timestamps": false
+    },
+    "jwt": {
+        "jwt_secret": "jwt_secret",
+        "expiresIn": "30 days"
+    },
+    "vtApiConfig": {
+        "vtApiKey": "4af05f315f92cb19975139b1f712c351c59132f266a262eaf55a1c6d7a7ddd54",
+        "scanDomensUrl": "https://www.virustotal.com/api/v3/urls",
+        "getAnalysis": "https://www.virustotal.com/api/v3/analyses"
+    },
+    "whoisApiConfig": {
+        "whoisKey": "at_385fNdFgG4fNH9h4lgZ9ZZDXbMed4",
+        "baseUrl": "https://www.whoisxmlapi.com/whoisserver/WhoisService?",
+        "outputFormat": "json"
+    },
+    "seqDbSchemasCollections": {
+            "schemaProj": "Security",
+            "collectionScans": "ScanResults"
+
+        }
+    }
