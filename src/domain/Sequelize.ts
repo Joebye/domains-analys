@@ -7,36 +7,24 @@ const host = config.get('seqDbConfig.host') as string;
 const port = config.get('seqDbConfig.port') as number;
 const dialect = config.get('seqDbConfig.dialect') as any;
 const isTimestamps = config.get('seqDbConfig.timestamps') as boolean
+const schemaDb = config.get('seqDbSchemasCollections.schemaProj') as string;
 
-const schemaDb: string = config.get('seqDbSchemasCollections.schemaProj');
+export const sequelize = new Sequelize(schemaDb, userName, password, {
+                host: host,
+                port: port,
+                dialect: dialect,
+                define: {timestamps: isTimestamps}
+})
 
-export class SequelizeDb {
-    clientDb;
-    schemaDb;
-    //collectionString: string;
-    constructor() {
-        this.schemaDb = schemaDb;
-      //  this.collectionString = schemaDb;
-        this.clientDb = new Sequelize(schemaDb, userName, password, {
-            host: host,
-            port: port,
-            dialect: dialect,
-            define: {timestamps: isTimestamps}
-    })
- }
-    async connect() {
-        try {
-                await this.clientDb.authenticate();
-                console.log(`Connection to db: "${this.schemaDb}" has been established successfully`);
-               } catch (error) {
-                 console.error(`Unable to connect to the db "${this.schemaDb}"`, error);
-               }
-               try {
-                await this.clientDb.sync();
-                console.log(`The db: "${this.schemaDb}" was synchronized`);
-            } catch (error) {
-                console.error(`Unable to synchronize the db: "${this.schemaDb}"`, error);
-            }
-        
+
+ export async function connectDb() {
+    try {
+        await sequelize.authenticate();
+        console.log(`Connection to db: ${schemaDb} has been established successfully`);
+    } catch (error) {
+        console.error(`Unable to connect to the db: ${schemaDb}`, error);
     }
 }
+
+  
+

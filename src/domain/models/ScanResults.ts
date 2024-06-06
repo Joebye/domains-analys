@@ -1,11 +1,10 @@
 import config from 'config';
-import { SequelizeDb } from '../Sequelize';
+import { sequelize } from '../Sequelize';
 import { DataTypes } from 'sequelize';
 
 const collectionScansDomains: string = config.get('seqDbSchemasCollections.collectionScans');
-const sequelize = new SequelizeDb();
 
-const DomainScans = sequelize.clientDb.define(collectionScansDomains, {
+const DomainScans = sequelize.define(collectionScansDomains, {
    
     url: {
         type: DataTypes.STRING,
@@ -26,17 +25,5 @@ const DomainScans = sequelize.clientDb.define(collectionScansDomains, {
 
 })
 
-connection();
-async function connection() {
-    await sequelize.connect();
-    const scansRes = await DomainScans.findAll();
-    console.log('data from the "ScanResults" table: ', scansRes.map(it => {
-        return {
-            'url': it.get('url'),
-            'timestamp': it.get('timestamp'),
-            }
-    }));
-
-}
 
 export default DomainScans;

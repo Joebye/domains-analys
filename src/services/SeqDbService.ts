@@ -1,3 +1,5 @@
+import { connectDb } from '../domain/Sequelize';
+import ListAnalyzes from '../domain/models/ListAnalyzes';
 import DomainScans from '../domain/models/ScanResults';
 import moment from "moment";
 
@@ -32,3 +34,22 @@ export default class SeqDbService {
         }
 
 }
+
+
+export async function syncTablesDb() {
+    await connectDb();
+ try {
+     await DomainScans.sync();
+     console.log(`${DomainScans.getTableName()} was synchronized`);
+ } catch (error) {
+     console.error(`Unable to synchronize ${DomainScans.getTableName()}`, error);
+ }
+ 
+ try {
+     await ListAnalyzes.sync();
+     console.log(`${ListAnalyzes.getTableName()} was synchronized`);
+ } catch (error) {
+     console.error(`Unable to synchronize ${ListAnalyzes.getTableName()}`, error);
+ }
+ 
+ }

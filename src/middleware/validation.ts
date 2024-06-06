@@ -5,10 +5,10 @@ const validate = (schema: any) => {
         } 
         if (schema && req.originalUrl) {
             const origUrl = req.originalUrl.split('/')[1];
-            const {error} = schema.validate({domain: origUrl});  // req.body validated; validation errors store in const error
-            req.validated = true;   //check has been done
+            const {error} = schema.validate({domain: origUrl});  
+            req.validated = true;   
             if (error) {
-            req.joiError = error.details[0].message;  //if validation is error -> first message store to req.joiError
+            req.joiError = error.details[0].message; 
             }
          
        }

@@ -26,7 +26,8 @@
     },
     "seqDbSchemasCollections": {
             "schemaProj": "Security",
-            "collectionScans": "ScanResults"
+            "collectionScans": "ScanResults",
+            "collectionListAnalyzes": "ListAnalyzes"
 
         }
     }
