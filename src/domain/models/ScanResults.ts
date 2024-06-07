@@ -11,7 +11,7 @@ const DomainScans = sequelize.define(collectionScansDomains, {
         allowNull: false
         },
     timestamp: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false
         },
     resultsVt: {

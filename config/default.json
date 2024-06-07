@@ -1,6 +1,7 @@
 {
     "server": {
-        "port": 3500
+        "port": 3500,
+        "addPort": 3600
     },
     "seqDbConfig": {
         "username": "root",
@@ -29,5 +30,9 @@
             "collectionScans": "ScanResults",
             "collectionListAnalyzes": "ListAnalyzes"
 
-        }
+        },
+    "rabbitMqConfig": {
+        "rabbitMqUrl": "amqp://localhost",
+        "channel": "domain_analysis"
+    }
     }

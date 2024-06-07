@@ -1,4 +1,5 @@
 import config from 'config';
+import moment from 'moment';
 import { sequelize } from '../Sequelize';
 import { DataTypes } from 'sequelize';
 
@@ -16,13 +17,15 @@ const ListAnalyzes = sequelize.define(collectionListAnalyzes, {
         defaultValue: 'pending'
     },
 
-    created_at: {
+    added: {
         type: DataTypes.STRING,
+        defaultValue: moment().format('YYYY-MM-DD HH:mm:ss'),
         allowNull: false
     },
-    updated_at: {
+    updated: {
         type: DataTypes.STRING,
-        allowNull: false
+        //defaultValue: moment().format('YYYY-MM-DD HH:mm:ss'),
+        allowNull: true
     }
 
 })

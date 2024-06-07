@@ -6,7 +6,7 @@ import moment from "moment";
 
 export default class SeqDbService {
 
-    async addToSeqDbFunc(obj: any) {
+    async analyzeDomainAndAddToResScansSeqDbFunc(obj: any) {
         let resToDbAdded: any;
         try {
           resToDbAdded = await DomainScans.create({
@@ -31,6 +31,16 @@ export default class SeqDbService {
             });
             const actRes = res[res.length-1]
             return actRes; 
+        }
+
+        async addToAnalizesList(domain: string) {
+            const res = await ListAnalyzes.findOrCreate({where: {url: domain}});
+            return res;
+        }
+
+        async getDomainFromAnalizesList(domain: string) {
+            const res = await ListAnalyzes.findOne({where: {url: domain}});
+            return res;
         }
 
 }
