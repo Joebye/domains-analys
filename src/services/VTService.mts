@@ -1,4 +1,4 @@
-import { fetchDataApi } from "../api/thirdPartyApi";
+import { fetchDataApi } from "../api/thirdPartyApi.mjs";
 import config from "config";
 
 

@@ -12,9 +12,7 @@ const jwtSecret = config.get('jwt.jwt_secret') as string;
         const accessToken = authHeader.substring(BEARER.length)
         try {
             const payload: any = jwt.verify(accessToken, jwtSecret);
-            console.log(payload);
-            
-           req.user = {username: payload.sub, roles: payload.roles}
+            req.user = {username: payload.sub, roles: payload.roles}
             
         } catch (error) {
         

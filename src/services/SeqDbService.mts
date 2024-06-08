@@ -1,6 +1,6 @@
-import { connectDb } from '../domain/Sequelize';
-import ListAnalyzes from '../domain/models/ListAnalyzes';
-import DomainScans from '../domain/models/ScanResults';
+import { connectDb } from '../domain/Sequelize.mjs';
+import ListAnalyzes from '../domain/models/ListAnalyzes.mjs';
+import DomainScans from '../domain/models/ScanResults.mjs';
 import moment from "moment";
 
 export default class SeqDbService {
@@ -57,9 +57,22 @@ export default class SeqDbService {
  }
 
 export async function syncTablesDb() {
-    await connectDb();
+    let connectionStatus = false;
+    console.log("Start connection");
+    
+    const id = setInterval(async () => {
+    connectionStatus = await connectDb();
+    console.log('Interval connection status: ' + connectionStatus);
+    
+    if (connectionStatus){
+        console.log('Start clear process interval id: ' + id);
+    clearInterval(id);  
+    }
+    },7000)
+   
  try {
-     await DomainScans.sync();
+     
+await DomainScans.sync();
      console.log(`${DomainScans.getTableName()} was synchronized`);
  } catch (error) {
      console.error(`Unable to synchronize ${DomainScans.getTableName()}`, error);

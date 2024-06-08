@@ -1,7 +1,7 @@
 import config from 'config';
 import moment from 'moment';
-import { sequelize } from '../Sequelize';
-import { DataTypes } from 'sequelize';
+import { sequelize } from '../Sequelize.mjs';
+import { DataTypes } from 'sequelize'
 
 const collectionListAnalyzes: string = config.get('seqDbSchemasCollections.collectionListAnalyzes');
 

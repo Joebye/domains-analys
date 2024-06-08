@@ -21,8 +21,10 @@ export const sequelize = new Sequelize(schemaDb, userName, password, {
     try {
         await sequelize.authenticate();
         console.log(`Connection to db: ${schemaDb} has been established successfully`);
+        return true;
     } catch (error) {
         console.error(`Unable to connect to the db: ${schemaDb}`, error);
+        return false
     }
 }
 

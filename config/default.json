@@ -6,7 +6,7 @@
     "seqDbConfig": {
         "username": "root",
         "password": "password",
-        "host": "localhost",
+        "host": "mysql",
         "port": 3306,
         "dialect": "mysql",
         "timestamps": false
@@ -16,13 +16,13 @@
         "tokenTest": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJVU0VSIiwiQURNSU4iXSwiaWF0IjoxNzEwODQ2NzE5LCJleHAiOjE4MTM0Mzg3MTksInN1YiI6InVzZXJAY28uaWwifQ.48r3_ln6GI1Ih2JmQzUllNiPnOLOjZVypGJb_0r8ExQ"
         
 },
-    "vtApiConfig": {
-        "vtApiKey": "4af05f315f92cb19975139b1f712c351c59132f266a262eaf55a1c6d7a7ddd54",
+    "vtApiConfig": { 
+        "vtApiKey": "686bebbf95037ce7846840c88deb63f89a6d01607c354a5ea010565f0ef3b18a",
         "scanDomensUrl": "https://www.virustotal.com/api/v3/urls",
         "getAnalysis": "https://www.virustotal.com/api/v3/analyses"
     },
     "whoisApiConfig": {
-        "whoisKey": "at_385fNdFgG4fNH9h4lgZ9ZZDXbMed4",
+        "whoisKey": "at_3hbVYRY6mBQEtx379TQ5tDux60BFh",
         "baseUrl": "https://www.whoisxmlapi.com/whoisserver/WhoisService?",
         "outputFormat": "json"
     },
@@ -33,11 +33,11 @@
 
         },
     "rabbitMqConfig": {
-        "rabbitMqUrl": "amqp://localhost",
+        "rabbitMqUrl": "amqp://localhost_rabbitmq",
         "channel": "domain_analysis"
     }, 
         "cronConfig": {
-            "interval": "0 0 1 * *"
+            "interval": "* * * * *"
         }
     
     }

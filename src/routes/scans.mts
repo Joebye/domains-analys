@@ -1,12 +1,12 @@
 
 import express from 'express';
 import asyncHandler from 'express-async-handler'
-import SeqDbService from "../services/SeqDbService";
-import valid from '../middleware/valid';
-import validation from '../middleware/validation';
+import SeqDbService from "../services/SeqDbService.mjs";
+import valid from '../middleware/valid.mjs';
+import validation from '../middleware/validation.mjs';
 import Joi from 'joi';
-import { rabbitMqSendToQ } from "../services/AnalysisQService";
-import authVerification from '../middleware/authVerification';
+import { rabbitMqSendToQ } from "../services/AnalysisQService.mjs";
+import authVerification from '../middleware/authVerification.mjs';
 const DOM_EXISTS_CHECK_LATER = "Requested domain already exists in the list of analyzes. Please, check last results or do it later";
 const DOM_DNOT_EXIST_ADDED = "Requested domain analysis doesn't exist. It has been added to the analyzes list. Please, check results later";
 const DOM_JUST_ADDED = "Your request has been added to the analyzes list. Thank you!"
@@ -53,6 +53,12 @@ scans.use(validation(schema));
 
 
     export async function getAllDomainsForNextAnalyzes() {
-        const findAllCompleted = await seqDbService.getAllDomainsForNextAnalyzes();
-        findAllCompleted.forEach(async it => await rabbitMqSendToQ(it))
+        try{
+            const findAllCompleted = await seqDbService.getAllDomainsForNextAnalyzes();
+            findAllCompleted.forEach(async it => await rabbitMqSendToQ(it))
+        }catch(error){
+            console.log("GetAllDomains error: " + error);
+            
+        }
+        
     } 

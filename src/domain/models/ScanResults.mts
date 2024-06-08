@@ -1,5 +1,5 @@
 import config from 'config';
-import { sequelize } from '../Sequelize';
+import { sequelize } from '../Sequelize.mjs';
 import { DataTypes } from 'sequelize';
 
 const collectionScansDomains: string = config.get('seqDbSchemasCollections.collectionScans');

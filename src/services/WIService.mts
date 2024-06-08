@@ -1,5 +1,5 @@
 import config from 'config';
-import { fetchDataApi } from '../api/thirdPartyApi';
+import { fetchDataApi } from '../api/thirdPartyApi.mjs';
 
 export default class WIService {
     url;

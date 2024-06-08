@@ -1,8 +1,8 @@
 import config from 'config';
 import amqp from 'amqplib'
-import VTService from './VTService';
-import WIService from './WIService';
-import SeqDbService from './SeqDbService';
+import VTService from './VTService.mjs';
+import WIService from './WIService.mjs';
+import SeqDbService from './SeqDbService.mjs';
 
 const url = config.get('rabbitMqConfig.rabbitMqUrl') as string;
 const channelBind = config.get('rabbitMqConfig.channel') as string;
