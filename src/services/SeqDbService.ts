@@ -3,7 +3,6 @@ import ListAnalyzes from '../domain/models/ListAnalyzes';
 import DomainScans from '../domain/models/ScanResults';
 import moment from "moment";
 
-
 export default class SeqDbService {
 
     async analyzeDomainAndAddToResScansSeqDbFunc(obj: any) {
@@ -23,8 +22,6 @@ export default class SeqDbService {
         return resToDbAdded;
         }
 
-
-
         async getActualDataFromSeqDb (domain: string) {
             const res = await DomainScans.findAll({
                 where: {url: domain}
@@ -43,8 +40,21 @@ export default class SeqDbService {
             return res;
         }
 
-}
+        async updateAnalizesList(domain: string) {
+            const updatedEntity = {status: 'completed', updated: moment().format('YYYY-MM-DD HH:mm:ss')}
+            const res = await ListAnalyzes.update(updatedEntity, {where: {
+                url: domain
+        }})
+            return res;
+        }
 
+        async getAllDomainsForNextAnalyzes() {
+            const findAllCompleted = await ListAnalyzes.findAll({
+            where: {status: 'completed'}});
+            return findAllCompleted.map((it:any) => it.url);
+                    
+        }
+ }
 
 export async function syncTablesDb() {
     await connectDb();

@@ -33,6 +33,7 @@ channel.consume(channelBind, async(msg: any) => {
             const [vt, wi] = await Promise.all([resScanVT, resScanWI]);
             const generalAnalysObj = {virusTotal: vt, whoIs: wi};
             await seqDbServ.analyzeDomainAndAddToResScansSeqDbFunc(generalAnalysObj);
+            await seqDbServ.updateAnalizesList(destMsg);
             channel.ack(msg);
             console.log(" [x] received %s", destMsg);
             } catch (error) {
@@ -46,6 +47,8 @@ channel.consume(channelBind, async(msg: any) => {
     }
     
 }
+
+
 
 
             

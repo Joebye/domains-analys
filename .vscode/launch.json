@@ -16,7 +16,10 @@
             ],
             "args": [
                 "${workspaceFolder}/src/index.ts"
-               ]
+               ],
+            "env": {
+            "JWT_SECRET_TEST":"jwt_secret"
+            }
         }
     ]
 }

@@ -1,18 +1,16 @@
-import VTService from "../services/VTService";
+
 import express from 'express';
 import asyncHandler from 'express-async-handler'
-import WIService from "../services/WIService";
 import SeqDbService from "../services/SeqDbService";
 import valid from '../middleware/valid';
 import validation from '../middleware/validation';
 import Joi from 'joi';
 import { rabbitMqSendToQ } from "../services/AnalysisQService";
-const DOM_EXISTS_CHECK_LATER = "Requested domain already exists in the list of analyzes. Please, check results later";
+import authVerification from '../middleware/authVerification';
+const DOM_EXISTS_CHECK_LATER = "Requested domain already exists in the list of analyzes. Please, check last results or do it later";
 const DOM_DNOT_EXIST_ADDED = "Requested domain analysis doesn't exist. It has been added to the analyzes list. Please, check results later";
 const DOM_JUST_ADDED = "Your request has been added to the analyzes list. Thank you!"
-export const scans = express.Router()
-const vtService = new VTService();
-const wiService = new WIService();
+export const scans = express.Router();
 const seqDbService = new SeqDbService();
 
 const schema = Joi.object({
@@ -22,19 +20,7 @@ const schema = Joi.object({
 
 scans.use(validation(schema));
 
-scans.get('/scans', valid, asyncHandler(
-    async(req,res) => {
-        const resScanVT = await vtService.getScannedData(req.body.url);
-        const domain: any = req.query.domainName;
-        const resScanWI = await wiService.getUrlScan(domain);
-        const [vt, wi] = await Promise.all([resScanVT, resScanWI]);
-        const generalAnalysObj = {virusTotal: vt, whoIs: wi};
-        await seqDbService.analyzeDomainAndAddToResScansSeqDbFunc(generalAnalysObj);
-        res.send(generalAnalysObj)
-    }))
-
-
-    scans.get('/get/:domain', valid, asyncHandler(
+    scans.get('/get/:domain', authVerification('ADMIN', 'USER'), valid, asyncHandler(
         async (req, res) => {
         const domain = req.params.domain;
         const foundScan = await seqDbService.getActualDataFromSeqDb(domain);
@@ -52,8 +38,7 @@ scans.get('/scans', valid, asyncHandler(
         }}
     ))
 
-
-    scans.get('/add/:domain', valid, asyncHandler(
+    scans.get('/add/:domain', authVerification('ADMIN', 'USER'), valid, asyncHandler(
         async (req, res) => {
             const domain = req.params.domain;
             const existDomain = await seqDbService.getDomainFromAnalizesList(domain);
@@ -67,5 +52,7 @@ scans.get('/scans', valid, asyncHandler(
     ))
 
 
-
-
+    export async function getAllDomainsForNextAnalyzes() {
+        const findAllCompleted = await seqDbService.getAllDomainsForNextAnalyzes();
+        findAllCompleted.forEach(async it => await rabbitMqSendToQ(it))
+    } 

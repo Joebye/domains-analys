@@ -24,7 +24,6 @@ const ListAnalyzes = sequelize.define(collectionListAnalyzes, {
     },
     updated: {
         type: DataTypes.STRING,
-        //defaultValue: moment().format('YYYY-MM-DD HH:mm:ss'),
         allowNull: true
     }
 
