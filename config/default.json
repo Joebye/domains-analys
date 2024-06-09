@@ -37,7 +37,7 @@
         "channel": "domain_analysis"
     }, 
         "cronConfig": {
-            "interval": "* * * * *"
+            "interval": "0 0 1 * *"
         }
     
     }
